@@ -23,7 +23,7 @@ def handle_draw_over():
 def draw_brush(event, x, y, flags, param):
     if event == cv.EVENT_MOUSEMOVE:
         if flags & cv.EVENT_FLAG_LBUTTON:
-            cv.circle(img, (x,y), 20, (255,255,255), -1)
+            cv.circle(img, (x,y), 15, (255,255,255), -1)
     if event == cv.EVENT_LBUTTONUP:
         handle_draw_over()
 

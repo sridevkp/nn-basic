@@ -59,17 +59,17 @@ class NN():
     def bd_prop( self, X, Z1, A1, Z2, A2, Y, m ):
         dZ2 = A2 - Y
         dW2 = 1/m * dZ2.dot( A1.T ) 
-        dB2 = 1/m *np.sum( Z2 ).reshape(-1,1) 
+        dB2 = 1/m *np.sum( dZ2, axis=1, keepdims=True )
         dZ1 = self.W[1].T.dot(dZ2) * deriv_ReLU(Z1)
         dW1 = 1/m *dZ1.dot( X.T ) 
-        dB1 = 1/m *np.sum( dZ1 ).reshape(-1,1) 
+        dB1 = 1/m *np.sum( dZ1, axis=1, keepdims=True )
         return dW1, dB1, dW2, dB2
 
     def get_accuracy( self, X, Y ):
         result, index = self.predict( X )
         return np.sum( result == Y) / Y.size
 
-    def train( self, X, Y, m=1000 ):
+    def train( self, X, Y, m=1 ):
         Z1, A1, Z2, A2 = self.fd_prop( X )
         dW1, dB1, dW2, dB2 = self.bd_prop( X, Z1, A1, Z2, A2, Y, m )
         self.update_params( dW1, dB1, dW2, dB2 )
